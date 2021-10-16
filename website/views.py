@@ -38,7 +38,8 @@ def randomFileName(fname):
         fname = pre + str(counter) + "." + suf
     return fname
 
-
+def index(request):
+    return redirect("/")
 def readCsvFile(fname):
     f = open(os.path.join(TEMP_CSV_DIR, fname), 'r')
     csv_r = csv.reader(f)

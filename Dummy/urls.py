@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.csvDisplay),
     path('editCsv/', views.editCsv, name='editCsv'),
+    path('accounts/profile/', views.index, name='index'),
     path('Row/<int:rowNum>', views.changeRow , name='Row'),
     path('delete/<int:rowNum>', views.deleteRow, name='delete'),
     path('discardFile', views.discardFile, name='discardFile'),

@@ -31,9 +31,7 @@
     <!-- Custom styles for this template-->
     <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
     {% block stylesheet %}{% endblock %}
-    {% if user.is_authenticated %}
-<script>location.replace("/")</script>
-{% endif %}
+  
 </head>
 
 <body id="page-top">
