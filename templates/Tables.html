@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block stylesheet %}
+    <style>
+        body{
+  height: 100vh;
+  text-align: center;
+
+}
+
+  /*Trigger Button*/
+.login-trigger {
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(to bottom right, #B05574, #F87E7B);
+  padding: 15px 30px;
+  border-radius: 30px;
+  position: relative;
+  top: 50%;
+}
+
+/*Modal*/
+h4 {
+  font-weight: bold;
+  color: #fff;
+}
+.close {
+  color: #fff;
+  transform: scale(1.2)
+}
+.modal-content {
+  font-weight: bold;
+  background: linear-gradient(to bottom right,#F87E7B,#B05574);
+}
+.form-control {
+  margin: 1em 0;
+}
+.form-control:hover, .form-control:focus {
+  box-shadow: none;
+  border-color: #fff;
+}
+.username, .password {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  border-bottom: 2px solid #eee;
+  padding-left: 0;
+  font-weight: normal;
+  background: transparent;
+}
+.form-control::-webkit-input-placeholder {
+  color: #eee;
+}
+.form-control:focus::-webkit-input-placeholder {
+  font-weight: bold;
+  color: #fff;
+}
+.login {
+  padding: 6px 20px;
+  border-radius: 20px;
+  background: none;
+  border: 2px solid #FAB87F;
+  color: #FAB87F;
+  font-weight: bold;
+  transition: all .5s;
+  margin-top: 1em;
+}
+.login:hover {
+  background: #FAB87F;
+  color: #fff;
+}
+.my-class table{
+    margin: 0 auto !important;
+}
+
+    </style>
+  
+{% endblock %}
+{% block body  %}
+    <div id="content-wrapper" style="overflow: hidden">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+                 <button type="button" id="button1"  >aa</button>  
+            </li>
+            <li class="breadcrumb-item active">CSV Upload</li>
+        </ol>
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+            <div class="container" style="font-size: .9em;">
+        <div class="row">
+            <div class="col-sm-12" style="overflow: auto;">
+                <table id="albums" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                        <th></th>
+                        {% for heading in headers %}
+                        <th class="text-uppercase">{{heading}}</th>
+                        {% endfor %}
+                        <th></th>
+                        <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rows in all_rows_csv %}
+                           <tr>
+                            <td>{{forloop.counter}}</td>
+                            {% for value in rows %}
+                            <td >
+                            {% if forloop.counter == 1 or forloop.counter == 2 or forloop.counter == 4 or forloop.counter == 8 or forloop.counter == 7  %}
+                            {% if forloop.counter == 1 and value|length < 5 %}
+                             <input id="datav" style="border-color: red;" value="{{value}}" type="text">
+                             {% elif forloop.counter == 2 and value|length < 5 %}
+                              <input id="datav" style="border-color: red;" value="{{value}}" type="text">
+                              {% elif forloop.counter == 4 and value|length < 9 %}
+                               <input id="datav" style="border-color: red;" value="{{value}}" type="text">
+                               {% elif forloop.counter == 7 and value|length < 5%}
+                                <input id="datav" style="border-color: red;" value="{{value}}" type="text">
+                                {% elif forloop.counter == 8 and value|length < 4 %}
+                                 <input id="datav" style="border-color: red;" value="{{value}}" type="text">
+                              {% else %}
+                               <input  value="{{value}}" type="text">
+
+                            {% endif %}
+                          
+                          {% else %}
+                           <input  value="{{value}}" type="text">
+                            {% endif %}
+                            
+                            {% comment %} {% if value|length < 5 and  forloop.counter == 1 %}
+                                                         <input class="data{{forloop.counter}}" value="{{value}}" type="text">
+{% else %}
+                             <input class="data{{forloop.counter}}" value="{{value}}" type="text">
+
+                            {% endif %} {% endcomment %}
+                            
+                             {% comment %} <input class="data{{forloop.counter}}" value="{{value}}" type="text"> {% endcomment %}
+                             
+                             </td>
+                            {% endfor %}
+                            <td>   <button type="button"
+                              class="btn btn-warning btn-sm js-update-product"
+                              data-url="{% url 'Row' forloop.counter %}">
+                        <span class="glyphicon glyphicon-pencil"></span> Edit
+                      </button>
+                </td>
+                            <td><p data-placement="top" data-toggle="tooltip" title="Delete"><a href="{% url 'delete' forloop.counter %}" class="btn btn-danger btn-sm  " data-title="Delete" data-target="#delete" ><span class="glyphicon glyphicon-trash">Delete</span></a></p></td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+     <div class="modal fade" id="modal-product">
+      <div class="modal-dialog">
+        <div class="modal-content">
+   
+        </div>
+      </div>
+    </div>
+
+
+{%  if editFile %}
+
+<a class="btn btn-primary btn-xs"  href="{% url 'displayUserCSV' %}"> Back </a>
+
+{%  else %}
+<div id="saveBTN" style="display: none;"><a  class="btn btn-primary btn-xs"  href="{% url 'saveCsvFile' %}" > SAVE CHANGES </a>
+</div>
+<a class="btn btn-danger btn-xs"  href="{% url 'discardFile' %}"> DISCARD CHANGES </a>
+
+{% endif %}
+<script>
+ if(document.getElementById("datav")){
+  var d =0;
+ }
+ else{
+   document.getElementById("saveBTN").style.display="block";
+ }
+
+</script>
+  <script>
+  $(document).ready(function(){
+
+  var loadForm = function () { 
+    var btn = $(this);
+    console.log(btn.attr("data-url"))
+    $.ajax({
+      url: btn.attr("data-url"),
+      type: 'get',
+      beforeSend: function () {
+        $("#modal-product .modal-content").html("");
+        $("#modal-product").modal("show");
+      },
+      success: function (data) {
+        console.log("Success call", data)
+        $("#modal-product .modal-content").html(data);
+      }
+    });
+  };
+ 
+  var saveForm = function () {
+    var form = $(this);
+    $.ajax({
+      url: form.attr("action"),
+      data: form.serialize(),
+      type: form.attr("method"),
+      dataType: 'json',
+      success: function (data) {
+        if (data.form_is_valid) {
+          $("#albums tbody").html(data.html_product_list);
+          $("#modal-product").modal("hide");
+        }
+        else {
+          $("#modal-product .modal-content").html(data.html_form);
+        }
+      }
+    });
+    return false;
+  };
+    /* Binding */
+    $(".albums").click(loadForm);
+    $("#modal-product").on("submit", ".js-product-create-form", saveForm);
+  
+    // Update product
+    $("#albums").on("click", ".js-update-product", loadForm);
+    $("#modal-product").on("submit", ".js-product-update-form", saveForm);
+  
+    // Delete product
+    $("#albums").on("click", ".js-delete-product", loadForm);
+    $("#modal-product").on("submit", ".js-product-delete-form", saveForm);
+  });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <!-- End of Django Datatables JavaScript -->
+<!-- Django Datatables JavaScript -->
+<script>
+
+    $(document).ready( function () {
+        console.log("Clicked")
+        $('table').DataTable({
+
+        });
+    } );
+
+    </script>
+{% endblock %}

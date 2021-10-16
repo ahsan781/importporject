@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    {% block title %}{% endblock %}
+    <title>Import Export</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/f9275dded9.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+     
+
+
+
+    
+    <title>Document</title>
+    {% load static %}
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
+    {% block stylesheet %}{% endblock %}
+</head>
+
+<body id="page-top">
+
+<!-- headers-->
+{% include "elements/header.html" %}
+
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    {% include "elements/sidebar.html" %}
+
+    <!-- /.content-wrapper -->
+    {% block body %}{% endblock %}
+</div>
+<!-- /#wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+               <a class="btn btn-primary" href="/logout">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+<!-- Page level plugin JavaScript-->
+<script src="{% static 'vendor/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+
+<!-- Demo scripts for this page-->
+<script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+<!-- Custom scripts for all pages-->
+<script src="{% static 'js/sb-admin.min.js' %}"></script>
+<script>
+    document.getElementById("button1").style.display = "none"
+    $(".alert-success").fadeTo(2000, 500).slideUp(500, function(){
+        $(".alert-success").slideUp(500);
+    });
+    $(".alert-error").fadeTo(2000, 500).slideUp(500, function(){
+        $(".alert-error").slideUp(500);
+    });
+
+    function validation(){
+
+        var length = $('.data1').val().length;
+        var length1 = $('.data2').val().length;
+         var length2 = $('.data4').val().length;
+         var length3 = $('.data8').val().length;
+         var length4 = $('.data7').val().length;
+        var char_limit = 5;
+        var num_limit = 9;
+        var post_limit = 4;
+        var state_limit = 5;
+        // let x = document.getElementById("data1");
+        if (length < char_limit) {
+
+            const x = document.getElementById("saveBTN");
+            x.style.display = "none";
+
+        } else {
+             const x = document.getElementById("saveBTN");
+             x.style.display = "block";
+
+
+        }
+
+                // let x = document.getElementById("data1");
+        if (length1 < char_limit) {
+           
+            const x = document.getElementById("saveBTN");
+            x.style.display = "none";
+
+        } else {
+             const x = document.getElementById("saveBTN");
+             x.style.display = "block";
+        }
+
+                // let x = document.getElementById("data1");
+        if (length2== num_limit) {
+             const x = document.getElementById("saveBTN");
+             x.style.display = "block";
+
+        } else {
+            const x = document.getElementById("saveBTN");
+            x.style.display = "none";
+        }
+
+                // let x = document.getElementById("data1");
+        if (length3== post_limit) {
+             const x = document.getElementById("saveBTN");
+             x.style.display = "block";
+        } else {
+          
+            const x = document.getElementById("saveBTN");
+            x.style.display = "none";
+
+
+        }
+                // let x = document.getElementById("data1");
+        if (length4 < state_limit) {
+             const x = document.getElementById("saveBTN");
+              x.style.display = "none";
+
+        } 
+        else {
+            const x = document.getElementById("saveBTN");
+            x.style.display = "block";
+        }
+
+
+
+
+    }
+</script>
+
+{% block javascript %}{% endblock %}
+</body>
+
+</html>

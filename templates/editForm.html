@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form style="background-color: #0f6674" method="POST" action="/Row/{{rowNum}}" class="js-product-update-form">
+        {% csrf_token %} 
+        <div class="form-group">
+            <h4 class="modal-title">Edit Row {{rowNum}}</h4>
+        </div>
+          <div class="form-group">
+        {% for heading, row_values in header_values %}
+        <label style="color: white" class="text-uppercase"  for=""> {{heading}} </label>
+        <input class="form-control" type="text" name="{{heading}}" id="" value="{{row_values}}"><br>
+        {% endfor %}
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      <input type="submit" id="submit-button" onclick="buttonHide()" class="btn btn-primary"></input>
+    </div>
+    </form>
+    
+
+    <script>
+function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+   }
+    async function buttonHide(){
+      await sleep(1200);
+      window.location.reload();
+    }
+    
+        $(document).ready(function(){
+      
+        var loadForm = function () { 
+          var btn = $(this);
+          console.log(btn.attr("data-url"))
+          $.ajax({
+            url: btn.attr("data-url"),
+            type: 'get',
+            beforeSend: function () {
+              $("#modal-product .modal-content").html("");
+              $("#modal-product").modal("show");
+            },
+            success: function (data) {
+              console.log("Success call", data)
+              $("#modal-product .modal-content").html(data);
+            }
+          });
+        };
+       
+        var saveForm = function () {
+          var form = $(this);
+          $.ajax({
+            url: form.attr("action"),
+            data: form.serialize(),
+            type: form.attr("method"),
+            dataType: 'json',
+            success: function (data) {
+              if (data.form_is_valid) {
+                $("#albums tbody").html(data.html_product_list);
+                $("#modal-product").modal("hide");
+              }
+              else {
+                $("#modal-product .modal-content").html(data.html_form);
+              }
+            }
+          });
+          return false;
+        };
+          /* Binding */
+          $(".albums").click(loadForm);
+          $("#modal-product").on("submit", ".js-product-create-form", saveForm);
+        
+          // Update product
+          $("#albums").on("click", ".js-update-product", loadForm);
+          $("#modal-product").on("submit", ".js-product-update-form", saveForm);
+        
+          // Delete product
+          $("#albums").on("click", ".js-delete-product", loadForm);
+          $("#modal-product").on("submit", ".js-product-delete-form", saveForm);
+        });
+          </script>
+</body>
+</html>
