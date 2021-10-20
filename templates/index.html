@@ -173,7 +173,7 @@ h4 {
     
     <!-- <input  class="form-select" aria-label="Default select example" type="text" value="First Name"> -->
     
-        <select class="form-select" aria-label="Default select example" style="appearance: none; color:black; margin-top: 8px; font-weight:bold " disabled>
+        <select class="form-select" aria-label="Default select example" style="appearance: none; color:black; font-weight:bold " disabled>
           <option selected value="1" >First Name</option>
   
         </select>
@@ -211,7 +211,7 @@ h4 {
          <select class="form-select" aria-label="Default select example" style="appearance: none;  color:black; font-weight:bold "  disabled>
           <option selected value="9">Gender</option>
         </select>
-          <select class="form-select" aria-label="Default select example" style="appearance: none;  color:black; height:19px ; font-weight:bold" disabled>
+          <select class="form-select" aria-label="Default select example" style="appearance: none;  color:black;  font-weight:bold" disabled>
           <option selected value="10">DOB</option>
         </select>
 
@@ -219,8 +219,8 @@ h4 {
 
            <th>
                {% for n in header %}
-           <select class="form-select" aria-label="Default select example">
-          <option style="  color:black; height:18px" selected value="1">{{header.0}}</option>
+           <select style=" color:black; height:26px; " class="form-select" aria-label="Default select example">
+          <option selected value="1">{{header.0}}</option>
           <option value="2">{{header.1}}</option>
           <option value="3">{{header.2}}</option>
           <option value="4">{{header.3}}</option>

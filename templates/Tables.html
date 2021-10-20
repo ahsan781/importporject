@@ -113,15 +113,15 @@ h4 {
                             {% for value in rows %}
                             <td >
                             {% if forloop.counter == 1 or forloop.counter == 2 or forloop.counter == 4 or forloop.counter == 8 or forloop.counter == 7  %}
-                            {% if forloop.counter == 1 and value|length < 5 %}
+                            {% if forloop.counter == 1 and value|length > 50 %}
                              <input id="datav" style="border-color: red;" value="{{value}}" type="text">
-                             {% elif forloop.counter == 2 and value|length < 5 %}
+                             {% elif forloop.counter == 2 and value|length > 150 %}
                               <input id="datav" style="border-color: red;" value="{{value}}" type="text">
-                              {% elif forloop.counter == 4 and value|length < 9 %}
+                              {% elif forloop.counter == 4 and value|length != 13 %}
                                <input id="datav" style="border-color: red;" value="{{value}}" type="text">
                                {% elif forloop.counter == 7 and value|length < 5%}
                                 <input id="datav" style="border-color: red;" value="{{value}}" type="text">
-                                {% elif forloop.counter == 8 and value|length < 4 %}
+                                {% elif forloop.counter == 8 and value|length != 4 %}
                                  <input id="datav" style="border-color: red;" value="{{value}}" type="text">
                               {% else %}
                                <input  value="{{value}}" type="text">

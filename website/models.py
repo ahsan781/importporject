@@ -26,7 +26,7 @@ class CsvSavedData(models.Model):
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     email = models.EmailField(blank=True)
-    mobile = models.CharField(max_length=50,blank=True)
+    mobile = models.TextField(blank=True)
     address = models.TextField(blank=True)
     suburb = models.CharField(max_length=100,blank=True)
     state = models.TextField(blank=True)
